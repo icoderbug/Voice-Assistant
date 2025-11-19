@@ -8,9 +8,8 @@ from sklearn.linear_model import LogisticRegression
 import pyjokes
 import os
 
-# -----------------------------
 #  GLOBAL TTS ENGINE
-# -----------------------------
+
 engine = pyttsx3.init('sapi5')
 engine.setProperty('rate', 175)
 engine.setProperty('volume', 1.0)
@@ -18,17 +17,15 @@ voices = engine.getProperty('voices')
 if len(voices) > 1:
     engine.setProperty('voice', voices[0].id)
 
-# -----------------------------
 #  SPEAK FUNCTION
-# -----------------------------
+
 def speak(text):
     print("🧠 Victor:", text)
     engine.say(text)
     engine.runAndWait()
 
-# -----------------------------
 #  TRAIN NLP MODEL
-# -----------------------------
+
 commands = [
     "what is the time", "tell me the time", "current time",
     "open youtube", "play video on youtube", "start youtube",
@@ -52,9 +49,8 @@ X = vectorizer.fit_transform(commands)
 model = LogisticRegression()
 model.fit(X, labels)
 
-# -----------------------------
 #  FUNCTIONS
-# -----------------------------
+
 def get_intent(command):
     x = vectorizer.transform([command])
     return model.predict(x)[0]
@@ -156,9 +152,8 @@ def process_command(command):
     else:
         speak("Sorry, I didn’t understand that command.")
 
-# -----------------------------
 #  HOTWORD DETECTION
-# -----------------------------
+
 def listen_for_hotword():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -178,10 +173,10 @@ def listen_for_hotword():
     except Exception:
         pass
 
-# -----------------------------
 #  MAIN LOOP
-# -----------------------------
+
 speak("Hey buddy! Victor is online and listening for 'Hey Victor'.")
 
 while True:
     listen_for_hotword()
+
